@@ -1,28 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cotação de Moedas</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="./img/images2.png">
-</head>
-<body>
-    <header class="h-16 ">
-        <h1>Cotação em tempo real.</h1>
-        <h2>Conversão rápida e fácil.</h2>
+    <link rel="icon" href="./img/images2.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="./scripts/tailwindConfig.js"></script>
+    <script src="./scripts/script.js" defer type="module"></script>
+  </head>
+  <body class="h-80% m-16 font-roboto font-light">
+    <header class="h-16 flex items-center p-6">
+      <div class="">
+        <img src="./img/images2.png" alt="" class="h-28" />
+      </div>
+      <div class="p-3 mx-12">
+        <h1 class="font-bold text-3xl">CONVERSÃO RÁPIDA E FÁCIL.</h1>
+        <h2 class="font-medium text-xl">COTAÇÃO EM TEMPO REAL.</h2>
+      </div>
     </header>
 
-    <main>
-        <aside>
+    <main class="flex">
+      <aside class="mt-16 float-left w-48">
+        <nav>
+          <ul class="flex flex-col gap-6">
+            <li><a href="#">Conversão de Moedas</a></li>
+            <li><a href="#">Conversão de Criptos</a></li>
+          </ul>
+        </nav>
+      </aside>
 
-        </aside>
-
-        <section>
-
-        </section>
-
+      <section class="mt-16 flex flex-col items-center gap-6 ">
+        <div class="flex gap-6 items-center">
+          <div class="">
+            <input id="currency" type="text" class="border-2 border-verde-medio rounded-md text-left px-2 outline-none focus:ring-2 focus:ring-verde-claro w-24 h-8" />
+          </div>
+          <div class="flex items-center gap-2">
+            <span class=""><img class="rounded-full h-10 w-10" src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51" alt=""></span>
+            <span>(USD) DÓLAR, ESTADOS UNIDADOS</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span><img class="rounded-full h-10 w-10" src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Brasil.png?ver=2.0.51" alt=""></span>
+            <span>(BRL) REAL, BRASIL</span>
+          </div>
+        </div>
+        <div>
+          <h2 class="font-medium" id="valorConvertido">4,78 BRL</h2>
+        </div>
+      </section>
     </main>
-    
-</body>
+  </body>
 </html>
