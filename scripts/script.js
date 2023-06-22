@@ -36,6 +36,12 @@ worker.addEventListener("message", event => {
   cotacaoDolar = valor
 
   valorConvertidoH2.innerHTML = ''
-  valorConvertidoH2.innerHTML = parseFloat(valor).toFixed(2) + moeda
-
+  if(currencyInput.value == ''){
+    valorConvertidoH2.innerHTML = parseFloat(valor).toFixed(2) + moeda
+  }else{
+    const cotacaoMultiplicada = valor * currencyInput.value
+    valorConvertidoH2.innerHTML = parseFloat(cotacaoMultiplicada).toFixed(2) + moeda
+  }
+  
+  
 })
