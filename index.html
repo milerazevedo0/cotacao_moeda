@@ -15,31 +15,31 @@
     <script src="./scripts/tailwindConfig.js"></script>
     <script src="./scripts/script.js" defer type="module"></script>
   </head>
-  <body class="h-80% m-16 font-roboto font-light">
-    <header class="h-16 flex items-center p-6 bg-verde-claro h-36 rounded-3xl">
+  <body class="h-80% m-10 font-roboto font-light">
+    <header class="h-16 flex items-center p-6 h-36 rounded-3xl">
       <div class="">
         <img src="./img/images2.png" alt="" class="h-28 rounded-full" />
       </div>
       <div class="p-3 mx-12">
-        <h1 class="font-bold text-3xl text-white">CONVERSÃO RÁPIDA E FÁCIL.</h1>
-        <h2 class="font-medium text-xl text-white">COTAÇÃO EM TEMPO REAL.</h2>
+        <h1 class="font-bold text-3xl ">CONVERSÃO RÁPIDA E FÁCIL.</h1>
+        <h2 class="font-medium text-xl ">COTAÇÃO EM TEMPO REAL.</h2>
       </div>
     </header>
 
-    <main class="flex">
-      <aside class="mt-16 float-left w-48">
-        <nav>
-          <ul class="flex flex-col gap-2">
-            <li class="flex w-48"><a class="w-48 h-10 border-2 border-verde-claro rounded-md p-1 hover:border-verde-medio bg-verde-claro text-white font-medium " href="#">Conversão de Moedas</a></li>
-            <li class="flex w-48"><a class="w-48 h-10 border-2 border-verde-claro rounded-md p-1 hover:border-verde-medio bg-verde-claro text-white font-medium" href="#">Conversão de Criptos</a></li>
-          </ul>
-        </nav>
-      </aside>
+    <aside class="mt-10 mr-4 float-left w-48">
+      <nav>
+        <ul class="flex flex-col gap-2">
+          <li class="flex w-48"><a class="flex justify-center items-center w-48 h-10 border-2 border-verde-claro rounded-md p-1 hover:border-verde-medio bg-verde-claro font-medium " href="#">Conversão de Moedas</a></li>
+          <li class="flex w-48 justify-center items-center"><a class="flex justify-center items-center w-48 h-10 border-2 border-verde-claro rounded-md p-1 hover:border-verde-medio bg-verde-claro font-medium hover:font-bold" href="#">Conversão de Criptos</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-      <section class="m-16 flex flex-col items-center gap-6 align-center">
+    <main class="flex flex-col items-center w-7/12">
+      <section class="m-4 flex flex-col items-center gap-6 justify-center bg-verde-claro rounded-3xl w-full h-36">
         <div class="flex gap-6 items-center">
           <div class="">
-            <input id="currency" type="text" class="border-2 border-verde-medio rounded-2xl text-left px-2 outline-none focus:ring-2 focus:ring-verde-claro w-24 h-8" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'); if(this.value.indexOf('.') != -1 && this.value.split('.')[1].length > 2) { this.value = this.value.slice(0, -1); }" placeholder="1.00"/>
+            <input id="currency" type="text" class="border-2 border-verde-medio rounded-2xl text-left px-2 outline-none focus:ring-2 focus:ring-verde-medio w-24 h-8" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'); if(this.value.indexOf('.') != -1 && this.value.split('.')[1].length > 2) { this.value = this.value.slice(0, -1); }" placeholder="1.00"/>
           </div>
           <div class="flex items-center gap-2">
             <span class=""><img class="rounded-full h-10 w-10" src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51" alt=""></span>
@@ -52,6 +52,25 @@
         </div>
         <div>
           <h2 class="font-medium" id="valorConvertido"> BRL</h2>
+        </div>
+      </section>
+
+      <section class="w-full flex  justify-center">
+        <div class="border rounded-lg flex items-center justify-center w-7/12">
+          <table class="border rounded-lg overflow-hidden w-11/12">
+            <thead class="text-center">
+              <tr>
+                <th>Moeda</th>
+                <th>Conversão</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <tr>
+                <td>USD 1.00</td>
+                <td>BRL 4.78</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
     </main>
