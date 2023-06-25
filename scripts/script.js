@@ -1,3 +1,5 @@
+import { populaTabela } from "./tabelaProgressao.js";
+import { adicionarDados } from "./grafico.js";
 const currencyInput = document.getElementById('currency');
 let cotacaoDolar = 0;
 let moeda = ' BRL';
@@ -42,6 +44,14 @@ worker.addEventListener("message", event => {
     const cotacaoMultiplicada = valor * currencyInput.value
     valorConvertidoH2.innerHTML = parseFloat(cotacaoMultiplicada).toFixed(2) + moeda
   }
-  
+
+  populaTabela(cotacaoDolar);
   
 })
+
+
+
+adicionarDados();
+
+
+

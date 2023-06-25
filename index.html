@@ -14,6 +14,7 @@
     />
     <script src="./scripts/tailwindConfig.js"></script>
     <script src="./scripts/script.js" defer type="module"></script>
+
   </head>
   <body class="h-80% m-10 font-roboto font-light">
     <header class="h-16 flex items-center p-6 h-36 rounded-3xl">
@@ -55,16 +56,22 @@
         </div>
       </section>
 
+      <section class="">
+        <div>
+          <canvas id="graficoMoeda"></canvas>
+        </div>
+      </section>
+
       <section class="w-full flex  justify-center">
         <div class="border rounded-lg flex items-center justify-center w-7/12">
           <table class="border rounded-lg overflow-hidden w-11/12">
             <thead class="text-center">
               <tr>
-                <th>Moeda</th>
+                <th>Valor</th>
                 <th>Conversão</th>
               </tr>
             </thead>
-            <tbody class="text-center">
+            <tbody id="tabelaValorConvertido" class="text-center">
               <tr>
                 <td>USD 1.00</td>
                 <td>BRL 4.78</td>
@@ -74,5 +81,6 @@
         </div>
       </section>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>
 </html>
