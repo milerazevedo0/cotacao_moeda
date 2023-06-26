@@ -1,5 +1,5 @@
 import { populaTabela } from "./tabelaProgressao.js";
-import { adicionarDados } from "./grafico.js";
+import { graficoDias } from "./grafico.js";
 const currencyInput = document.getElementById('currency');
 let cotacaoDolar = 0;
 let moeda = ' BRL';
@@ -32,7 +32,7 @@ function converteValor(valor){
 
 let worker = new Worker('./scripts/workers/workerMoeda.js');
 worker.postMessage('usd');
-setInterval(()=>worker.postMessage('usd'), 5000 )
+setInterval(()=>worker.postMessage('usd'), 30000 )
 worker.addEventListener("message", event => {
   let valor = event.data.USDBRL.ask;
   cotacaoDolar = valor
@@ -49,9 +49,7 @@ worker.addEventListener("message", event => {
   
 })
 
-
-
-adicionarDados();
+graficoDias();
 
 
 
