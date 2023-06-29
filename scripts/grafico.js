@@ -1,12 +1,14 @@
 const elementoGrafico = document.getElementById('graficoMoeda');
 const tituloMoeda = []
+const btnDias = document.querySelectorAll('.btn-dias')
+let diasGrafico = 7
 
 
-export async function graficoDias(){
-    const conecta = await fetch('https://economia.awesomeapi.com.br/json/daily/USDT-BRL/10')
+export async function graficoDias(dias){
+    const conecta = await fetch(`https://economia.awesomeapi.com.br/json/daily/USD-BRL/${dias}`)
     const conectaTraduzido = await conecta.json();
+    tituloMoeda.splice(0, tituloMoeda.length);
     tituloMoeda.push(conectaTraduzido[0].name)
-    // const conectaOrdenado = conectaTraduzido.sort((a, b) => a.timestamp - b.timestamp)
     trataValoresParaGrafico(conectaTraduzido)
 
 }
@@ -21,14 +23,20 @@ const grafico =  new Chart(elementoGrafico, {
         borderWidth: 1
       }]
     },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+    }
   });
   
 
   function trataValoresParaGrafico(dados){
+    removeDadosDoGrafico();
     const dadosOrdenados = dados.sort((a, b) => a.timestamp - b.timestamp)
     dadosOrdenados.forEach(cotacao => {
         let data = converteData(cotacao.timestamp)
-        let valor = cotacao.ask;
+        let valor = parseFloat(cotacao.ask).toFixed(2);
+        
         adicionarDados(grafico, data, valor )
     })
   }
@@ -45,7 +53,6 @@ function converteData(timestamp){
 }
 
   function adicionarDados(grafico, legenda, dados){
-    
     grafico.data.labels.push(legenda);
     grafico.data.datasets.forEach((dataset) => {
         dataset.data.push(dados);  
@@ -53,4 +60,28 @@ function converteData(timestamp){
     grafico.update();
   }
 
+  function removeDadosDoGrafico(){
+    grafico.data.labels.splice(0, grafico.data.labels.length);
+    grafico.data.datasets.forEach((dataset) =>{
+      dataset.data.splice(0, dataset.data.length);
+    });
+
+    grafico.update();
+    
+  };
+
+  btnDias.forEach((btn) =>{
+    
+    btn.addEventListener('click', (e) => {
+
+      for(let i = 0; i < btnDias.length ; i++){
+          btnDias[i].classList.remove('bg-verde-claro')
+      }
+
+      const dias = e.target.attributes[1].value
+      diasGrafico = parseInt(dias)
+      graficoDias(diasGrafico)
+      btn.classList.add('bg-verde-claro')
+    })
+  })
   

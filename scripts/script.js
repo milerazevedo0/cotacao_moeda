@@ -1,9 +1,10 @@
 import { populaTabela } from "./tabelaProgressao.js";
 import { graficoDias } from "./grafico.js";
 const currencyInput = document.getElementById('currency');
+const valorConvertidoH2 = document.getElementById('valorConvertido')
+const diasGrafico = 7
 let cotacaoDolar = 0;
 let moeda = ' BRL';
-const valorConvertidoH2 = document.getElementById('valorConvertido')
 
 currencyInput.addEventListener('input', formataMoeda);
 function formataMoeda(){
@@ -49,7 +50,7 @@ worker.addEventListener("message", event => {
   
 })
 
-graficoDias();
+graficoDias(diasGrafico);
 
 
 
