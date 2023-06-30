@@ -3,14 +3,12 @@ const tituloMoeda = []
 const btnDias = document.querySelectorAll('.btn-dias')
 let diasGrafico = 7
 
-
 export async function graficoDias(dias){
     const conecta = await fetch(`https://economia.awesomeapi.com.br/json/daily/USD-BRL/${dias}`)
     const conectaTraduzido = await conecta.json();
     tituloMoeda.splice(0, tituloMoeda.length);
     tituloMoeda.push(conectaTraduzido[0].name)
     trataValoresParaGrafico(conectaTraduzido)
-
 }
 
 const grafico =  new Chart(elementoGrafico, {
@@ -65,19 +63,14 @@ function converteData(timestamp){
     grafico.data.datasets.forEach((dataset) =>{
       dataset.data.splice(0, dataset.data.length);
     });
-
     grafico.update();
-    
   };
 
   btnDias.forEach((btn) =>{
-    
     btn.addEventListener('click', (e) => {
-
       for(let i = 0; i < btnDias.length ; i++){
           btnDias[i].classList.remove('bg-verde-claro')
       }
-
       const dias = e.target.attributes[1].value
       diasGrafico = parseInt(dias)
       graficoDias(diasGrafico)
