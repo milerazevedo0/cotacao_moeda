@@ -13,6 +13,7 @@
       rel="stylesheet"
     />
     <script src="./scripts/tailwindConfig.js"></script>
+    <link rel="stylesheet" href="src/css/scrollbar.css">
     <script src="./scripts/script.js" defer type="module"></script>
   </head>
   <body class="h-80% m-10 font-roboto font-light">
@@ -61,7 +62,7 @@
           </div>
           <div class="">
             
-              <button class="flex gap-2 items-center justify-center">
+              <button class="flex gap-2 items-center justify-center" id="btnMoedasOrigem">
                 <img
                   class="rounded-full h-8 w-8"
                   src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51"
@@ -74,7 +75,7 @@
                   class="h-5"
                 />
               </button>
-              <div class="menuMoedas absolute bg-verde-claro hidden">
+              <div class="menuMoedas absolute bg-verde-claro mt-3 hidden" id="divListaMoedasOrigem">
                 <div
                   class="rowMoedas flex flex-col items-center border-2 border-verde-medio rounded-lg p-2 gap-2"
                 >
@@ -91,6 +92,7 @@
                         type="text"
                         placeholder="Digite a moeda"
                         class="border-2 border-verde-medio rounded-md px-2 outline-none focus:ring-1 focus:ring-verde-medio"
+                        id="inputMoedaOrigem"
                       />
                     </div>
                   </div>
@@ -99,8 +101,8 @@
                       <p class="font-medium border-b-2 border-verde-medio">
                         Todas as moedas
                       </p>
-                      <ul class="flex flex-col gap-2">
-                        <li class="flex items-center gap-1">
+                      <ul class="flex flex-col gap-2 max-h-48 overflow-y-auto relative inline-block" id="listaMoedaOrigem">
+                        <!-- <li class="flex items-center gap-1">
                           <img
                             class="rounded-full h-6 w-6"
                             src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51"
@@ -129,7 +131,7 @@
                           <span class="text-xs"
                             >(USD) DÓLAR, ESTADOS UNIDADOS</span
                           >
-                        </li>
+                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -137,7 +139,7 @@
               </div>
             
           </div>
-          <div class="flex items-center gap-2">
+          <!-- <div class="flex items-center gap-2">
             <span
               ><img
                 class="rounded-full h-10 w-10"
@@ -145,7 +147,88 @@
                 alt=""
             /></span>
             <span>(BRL) REAL, BRASIL</span>
-          </div>
+          </div> -->
+          <div class="">
+            
+            <button class="flex gap- items-center justify-center" id="btnMoedasDestino">
+              <img
+                class="rounded-full h-8 w-8"
+                src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Brasil.png?ver=2.0.51"
+                alt=""
+              />
+              <span class="w-48">(BRL) REAL, BRASIL</span>
+              <img
+                src="./img/down.png"
+                alt="imagem para expansão de lista"
+                class="h-5"
+              />
+            </button>
+            <div class="menuMoedas absolute bg-verde-claro mt-3 hidden" id="divListaMoedasDestino">
+              <div
+                class="rowMoedas flex flex-col items-center border-2 border-verde-medio rounded-lg p-2 gap-2"
+              >
+                <div>
+                  <div class="inputGoup flex gap-2">
+                    <button>
+                      <img
+                        src="./img/pesquisar.svg"
+                        alt="imagem de pesquisa"
+                        class="h-5"
+                      />
+                    </button>
+                    <input
+                      type="text"
+                      placeholder="Digite a moeda"
+                      class="border-2 border-verde-medio rounded-md px-2 outline-none focus:ring-1 focus:ring-verde-medio"
+                      id="inputMoedaDestino"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div class="flex flex-col items-center">
+                    <p class="font-medium border-b-2 border-verde-medio">
+                      Todas as moedas
+                    </p>
+                    <ul class="flex flex-col gap-2 max-h-48 overflow-y-auto" id="listaMoedaDestino">
+                      <!-- <li class="flex items-center gap-1">
+                        <img
+                          class="rounded-full h-6 w-6"
+                          src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51"
+                          alt=""
+                        />
+                        <span class="text-xs"
+                          >(USD) DÓLAR, ESTADOS UNIDADOS</span
+                        >
+                      </li>
+                      <li class="flex items-center gap-1">
+                        <img
+                          class="rounded-full h-6 w-6"
+                          src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51"
+                          alt=""
+                        />
+                        <span class="text-xs"
+                          >(USD) DÓLAR, ESTADOS UNIDADOS</span
+                        >
+                      </li>
+                      <li class="flex items-center gap-1">
+                        <img
+                          class="rounded-full h-6 w-6"
+                          src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51"
+                          alt=""
+                        />
+                        <span class="text-xs"
+                          >(USD) DÓLAR, ESTADOS UNIDADOS</span
+                        >
+                      </li> -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        </div>
+
+
         </div>
         <div>
           <h2 class="font-medium" id="valorConvertido">BRL</h2>

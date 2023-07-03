@@ -1,0 +1,40 @@
+
+:root {
+    --primary: rebeccapurple;
+    --secondary: cornflowerblue;
+    --verde-claro: #95D1CC;
+    --verde-medio:  #5584AC;
+    --verde-escuro: #22577E;
+
+  }
+
+/* Scrollbar styles */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--secondary);
+  }
+  
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: var(--verde-medio);
+    border-radius: 10px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--verde-claro);
+  /*   background: repeating-linear-gradient(
+      45deg,
+      var(--secondary),
+      var(--secondary) 5px,
+      var(--primary) 5px,
+      var(--primary) 10px
+    ); */
+    border-radius: 20px;
+    border: 3px solid var(--verde-medio);
+  }

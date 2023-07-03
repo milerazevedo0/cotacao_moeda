@@ -1,6 +1,6 @@
 import { populaTabela } from "./tabelaProgressao.js";
 import { graficoDias } from "./grafico.js";
-import {possiveisMoedas} from './moedas.js'
+import {possiveisMoedas, listaMoedas} from './moedas.js'
 const currencyInput = document.getElementById('currency');
 const valorConvertidoH2 = document.getElementById('valorConvertido')
 const diasGrafico = 7
@@ -49,10 +49,13 @@ worker.addEventListener("message", event => {
 
   populaTabela(cotacaoDolar);
   
+  
 })
 
 graficoDias(diasGrafico);
-possiveisMoedas()
 
+// window.addEventListener('load', possiveisMoedas());
+
+listaMoedas();
 
 
