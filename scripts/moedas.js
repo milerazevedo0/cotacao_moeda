@@ -7,32 +7,26 @@ const divListaMoedasOrigem = document.getElementById('divListaMoedasOrigem')
 const divListaMoedasDestino = document.getElementById('divListaMoedasDestino')
 const inputMoedaOrigem = document.getElementById('inputMoedaOrigem')
 const inputMoedaDestino = document.getElementById('inputMoedaDestino')
+const spanMoedaOrigem = document.getElementById('spanMoedaOrigem')
+const spanMoedaDestino = document.getElementById('spanMoedaDestino')
 let tiposDeMoedasCache = JSON.parse(localStorage.getItem('tiposDeMoedasCache'))
 
 export async function possiveisMoedas(){
-
-    // if(tiposDeMoedasCache){
-    //     populaLista(tiposDeMoedasCache)
-    // }
-    // else{
         const conecta = await fetch('https://economia.awesomeapi.com.br/json/available/uniq');
         const conectaTraduzido = await conecta.json();
         localStorage.setItem('tiposDeMoedasCache', JSON.stringify(conectaTraduzido));
-        populaListaMoedasOrigem(conectaTraduzido)
-        populaListaMoedasDestino(conectaTraduzido)
-    // }
-
+        populaListaMoedas(conectaTraduzido, ulMoedaOrigem)
+        populaListaMoedas(conectaTraduzido, ulMoedaDestino)
 }
 
-function populaListaMoedasOrigem (valores){
+function populaListaMoedas(valores, ulmoeda){
 
-    ulMoedaOrigem.innerHTML = ''
-    ulMoedaDestino.innerHTML = ''
+    ulmoeda.innerHTML = ''
     Object.entries(valores).forEach(valor =>{
         let chave = valor[0];
         let value = valor[1];
 
-        ulMoedaOrigem.innerHTML += `
+        ulmoeda.innerHTML += `
         <li class="flex items-center gap-1 cursor-pointer">
             <img
             class="rounded-full h-6 w-6"
@@ -42,59 +36,41 @@ function populaListaMoedasOrigem (valores){
             <span class="text-xs borderb-2 border-transparent hover:border-b-2 hover:border-verde-medio transition duration-500">(${chave}) - ${value}</span>
         </li>
         `
-
     })
-
-}
-
-function populaListaMoedasDestino (valores){
-
-    ulMoedaOrigem.innerHTML = ''
-    ulMoedaDestino.innerHTML = ''
-    Object.entries(valores).forEach(valor =>{
-        let chave = valor[0];
-        let value = valor[1];
-
-        ulMoedaDestino.innerHTML += `
-        <li class="flex items-center gap-1 cursor-pointer">
-            <img
-            class="rounded-full h-6 w-6"
-            src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51"
-            alt=""
-            />
-            <span class="text-xs borderb-2 border-transparent hover:border-b-2 hover:border-verde-medio">(${chave}) - ${value}</span>
-        </li>
-        `
-    })
-
 }
 
 
 export function listaMoedas(){
     btnMoedasOrigem.addEventListener('click', () =>{
+        
         if(ulMoedaOrigem.children.length == 0){
             if(tiposDeMoedasCache){
-                populaListaMoedasOrigem(tiposDeMoedasCache)
+                populaListaMoedas(tiposDeMoedasCache, ulMoedaOrigem)
             }else{
                 possiveisMoedas()
             }
         }
-        divListaMoedasOrigem.classList.toggle('hidden')
+        populaListaMoedas(tiposDeMoedasCache, ulMoedaOrigem)
+        
 
         if(!divListaMoedasDestino.classList.contains('hidden')){
             
             divListaMoedasDestino.classList.toggle('hidden')
         }
+        inputMoedaOrigem.value =''
+        divListaMoedasOrigem.classList.toggle('hidden')
     })
     
     btnMoedasDestino.addEventListener('click', () =>{
+        inputMoedaDestino.value = ''
         if(ulMoedaDestino.children.length == 0){
             if(tiposDeMoedasCache){
-                populaListaMoedasDestino(tiposDeMoedasCache)
+                populaListaMoedas(tiposDeMoedasCache, ulMoedaDestino)
             }else{
                 possiveisMoedas()
             }
         }
+        populaListaMoedas(tiposDeMoedasCache, ulMoedaDestino)
         divListaMoedasDestino.classList.toggle('hidden')
 
         if(!divListaMoedasOrigem.classList.contains('hidden')){
@@ -106,81 +82,57 @@ export function listaMoedas(){
 
 
 inputMoedaOrigem.addEventListener('input', ()=>{
-    sugereMoeda(tiposDeMoedasCache)
+    const moedaPesquisaOrigem = inputMoedaOrigem.value.toLowerCase()
+    sugereMoeda(tiposDeMoedasCache, ulMoedaOrigem, moedaPesquisaOrigem)
 })
 
-function sugereMoeda(valores){
-    const moedaPesquisaOrigem = inputMoedaOrigem.value.toLowerCase()
-
-    const valoresEmObjetos = []
-    for (let chave in valores){
-        const novoObjeto = {};
-        novoObjeto[chave] = valores[chave]
-        valoresEmObjetos.push(novoObjeto)
-    }
-
-    // console.log(valoresEmObjetos)
+inputMoedaDestino.addEventListener('input', ()=>{
+    const moedaPesquisaDestino = inputMoedaDestino.value.toLowerCase()
+    sugereMoeda(tiposDeMoedasCache, ulMoedaDestino, moedaPesquisaDestino)
+})
 
 
+function sugereMoeda(valores, ulMoeda, inputMoeda){
+    const arrayDeObjetos = Object.entries(valores).map(([id, descricao]) =>{
+        return {id, descricao}
+    })
+    console.log(ulMoeda.id)
 
-    const moedaFiltrada = valoresEmObjetos.filter(moeda => moeda.toLowerCase().includes(moedaPesquisaOrigem))
-    console.log(moedaFiltrada)
+    const moedaFiltrada = arrayDeObjetos.filter(moeda => moeda.id.toLowerCase().includes(inputMoeda) || moeda.descricao.toLowerCase().includes(inputMoeda))
 
-
-
-
-
-
-
-
-
-
-
-    Object.entries(valores).forEach(valor =>{
-        let chave = valor[0];
-        let value = valor[1];
-        let valoresTratadosParaObjeto = valor.reduce((acc, item, index) => {
-            if (index % 2 === 0) {
-              acc[item] = valor[index + 1];
-            }
-            return acc;
-          }, {});
-
-        //   console.log(valoresTratadosParaObjeto)
-
+    ulMoeda.innerHTML = ''
+    moedaFiltrada.forEach(moeda => {
         
-        // moeda.toLowerCase().includes(moedaPesquisaOrigem)
-        //  console.log(moedaFiltrada)
+        let liMoeda = 
+        `
+        <li class="flex items-center gap-1 cursor-pointer">
+             <img
+             class="rounded-full h-6 w-6"
+             src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51"
+             alt=""
+             />
+             <span class="text-xs borderb-2 border-transparent hover:border-b-2 hover:border-verde-medio">(${moeda.id}) - ${moeda.descricao}</span>
+         </li>
+        `
+        ulMoeda.innerHTML += liMoeda
 
-        ulMoedaOrigem.innerHTML = ''
-        moedaFiltrada.forEach(moeda => {
-            // console.log(moeda)
-
-            ulMoedaOrigem.innerHTML +=
-            `
-            <li class="flex items-center gap-1 cursor-pointer">
-            <img
-            class="rounded-full h-6 w-6"
-            src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51"
-            alt=""
-            />
-            <span class="text-xs borderb-2 border-transparent hover:border-b-2 hover:border-verde-medio">(${moeda[0]}) - ${moeda[1]}</span>
-        </li>
-            `
+        liMoeda.addEventListener('click', () => {
+            console.log('clicou')
+            if(ulMoeda.id === ulMoedaOrigem){
+                spanMoedaOrigem.innerText = moeda.id.toUpperCase + ', ' + moeda.descricao.toUpperCase
+            }
         })
 
     })
-
-
-    
-    // console.log(tiposDeMoedasCache)
-    // const abc = [{'a': 'a'}, {'b': 'b'}, {'c': 'c'}]
-    // const moedaFiltrada = abc.filter(moeda => moeda.toLowerCase.includes(moedaPesquisaOrigem))
-
-    // ulMoedaOrigem.innerHTML = ''
-    // moedaFiltrada.forEach(moeda => {
-    //     const moedaLi = document.createElement('li')
-    //     moedaLi.textContent = moeda
-    //     ulMoedaOrigem.appendChild(moedaLi)
-    // })
 }
+
+document.addEventListener('click', (event) =>{
+    
+    if(!btnMoedasOrigem.contains(event.target) && !divListaMoedasOrigem.contains(event.target)){
+        divListaMoedasOrigem.classList.add('hidden')
+    }
+
+    if(!btnMoedasDestino.contains(event.target) && !divListaMoedasDestino.contains(event.target)){
+        divListaMoedasDestino.classList.add('hidden')
+    }
+})
