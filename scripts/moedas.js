@@ -118,7 +118,7 @@ function sugereMoeda(valores, ulMoeda, inputMoeda){
 
         liMoeda.addEventListener('click', () => {
             console.log('clicou')
-            if(ulMoeda.id === ulMoedaOrigem){
+            if(ulMoeda.id == ulMoedaOrigem){
                 spanMoedaOrigem.innerText = moeda.id.toUpperCase + ', ' + moeda.descricao.toUpperCase
             }
         })
