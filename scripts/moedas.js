@@ -42,6 +42,7 @@ function populaListaMoedas(valores, ulmoeda){
 
 export function listaMoedas(){
     btnMoedasOrigem.addEventListener('click', () =>{
+        const moedaPesquisaOrigem = inputMoedaOrigem.value.toLowerCase()
         
         if(ulMoedaOrigem.children.length == 0){
             if(tiposDeMoedasCache){
@@ -50,15 +51,17 @@ export function listaMoedas(){
                 possiveisMoedas()
             }
         }
-        populaListaMoedas(tiposDeMoedasCache, ulMoedaOrigem)
         
-
         if(!divListaMoedasDestino.classList.contains('hidden')){
             
             divListaMoedasDestino.classList.toggle('hidden')
         }
+        populaListaMoedas(tiposDeMoedasCache, ulMoedaOrigem)
         inputMoedaOrigem.value =''
         divListaMoedasOrigem.classList.toggle('hidden')
+        sugereMoeda(tiposDeMoedasCache, ulMoedaOrigem,moedaPesquisaOrigem)
+        
+        
     })
     
     btnMoedasDestino.addEventListener('click', () =>{
@@ -70,15 +73,18 @@ export function listaMoedas(){
                 possiveisMoedas()
             }
         }
-        populaListaMoedas(tiposDeMoedasCache, ulMoedaDestino)
-        divListaMoedasDestino.classList.toggle('hidden')
 
         if(!divListaMoedasOrigem.classList.contains('hidden')){
             
             divListaMoedasOrigem.classList.toggle('hidden')
         }
-    })
+        populaListaMoedas(tiposDeMoedasCache, ulMoedaDestino)
+        divListaMoedasDestino.classList.toggle('hidden')
+        const moedaPesquisaDestino = inputMoedaDestino.value.toLowerCase()
+        sugereMoeda(tiposDeMoedasCache, ulMoedaDestino, moedaPesquisaDestino)
+    })  
 }
+
 
 
 inputMoedaOrigem.addEventListener('input', ()=>{
@@ -96,34 +102,48 @@ function sugereMoeda(valores, ulMoeda, inputMoeda){
     const arrayDeObjetos = Object.entries(valores).map(([id, descricao]) =>{
         return {id, descricao}
     })
-    console.log(ulMoeda.id)
 
     const moedaFiltrada = arrayDeObjetos.filter(moeda => moeda.id.toLowerCase().includes(inputMoeda) || moeda.descricao.toLowerCase().includes(inputMoeda))
 
     ulMoeda.innerHTML = ''
     moedaFiltrada.forEach(moeda => {
         
-        let liMoeda = 
-        `
-        <li class="flex items-center gap-1 cursor-pointer">
-             <img
-             class="rounded-full h-6 w-6"
-             src="https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51"
-             alt=""
-             />
-             <span class="text-xs borderb-2 border-transparent hover:border-b-2 hover:border-verde-medio">(${moeda.id}) - ${moeda.descricao}</span>
-         </li>
-        `
-        ulMoeda.innerHTML += liMoeda
+        let liMoeda = document.createElement('li')
+        liMoeda.classList.add('flex')
+        liMoeda.classList.add('items-center')
+        liMoeda.classList.add('gap-1')
+        liMoeda.classList.add('cursor-pointer')
+        let imgMoeda = document.createElement('img')
+        imgMoeda.setAttribute('src', 'https://financeone.com.br/wp-content/plugins/fo-currency-converter/assets/images/flags/png/Estados Unidos.png?ver=2.0.51')
+        imgMoeda.classList.add('rounded-full')
+        imgMoeda.classList.add('h-6')
+        imgMoeda.classList.add('w-6')
+        let spanMoeda = document.createElement('span')
+        spanMoeda.classList.add('text-xs')
+        spanMoeda.classList.add('border-b-2')
+        spanMoeda.classList.add('border-transparent')
+        spanMoeda.classList.add('hover:border-b-2')
+        spanMoeda.classList.add('hover:border-verde-medio')
+        spanMoeda.innerText = moeda.id + ' - ' + moeda.descricao
 
+        liMoeda.appendChild(imgMoeda)
+        liMoeda.appendChild(spanMoeda)
+
+        ulMoeda.appendChild(liMoeda)
+        
         liMoeda.addEventListener('click', () => {
-            console.log('clicou')
-            if(ulMoeda.id == ulMoedaOrigem){
-                spanMoedaOrigem.innerText = moeda.id.toUpperCase + ', ' + moeda.descricao.toUpperCase
+            if(ulMoeda.id == ulMoedaOrigem.id){
+                spanMoedaOrigem.innerText = moeda.id.toUpperCase() + ', ' + moeda.descricao.toUpperCase()
+            }
+
+            if(ulMoeda.id == ulMoedaDestino.id){
+                spanMoedaDestino.innerText = moeda.id.toUpperCase() + ', ' + moeda.descricao.toUpperCase()
             }
         })
 
+        
     })
+
 }
 
 document.addEventListener('click', (event) =>{
