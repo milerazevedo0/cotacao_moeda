@@ -7,7 +7,17 @@ export async function graficoDias(dias, moedaOrigem, moedaDestino){
     const conecta = await fetch(`https://economia.awesomeapi.com.br/json/daily/${moedaOrigem}-${moedaDestino}/${dias}`)
     const conectaTraduzido = await conecta.json();
     tituloMoeda.splice(0, tituloMoeda.length);
-    tituloMoeda.push(conectaTraduzido[0].name)
+    // console.log(conectaTraduzido)
+
+    if(conectaTraduzido[0].name == undefined){
+      for(let i = 0; i < conectaTraduzido.length; i++){
+        if(!conectaTraduzido[i].name == undefined){
+          tituloMoeda.push(conectaTraduzido[i].name)
+        }
+      }
+    } tituloMoeda.push(conectaTraduzido[0].name)
+
+    // tituloMoeda.push(conectaTraduzido[0].name)
     trataValoresParaGrafico(conectaTraduzido)
 }
 
@@ -73,7 +83,7 @@ function converteData(timestamp){
       }
       const dias = e.target.attributes[1].value
       diasGrafico = parseInt(dias)
-      graficoDias(diasGrafico)
+      graficoDias(diasGrafico, 'USD', 'BRL')
       btn.classList.add('bg-verde-claro')
     })
   })

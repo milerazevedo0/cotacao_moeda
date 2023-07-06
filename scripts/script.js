@@ -44,6 +44,7 @@ worker.postMessage('usd');
 setInterval(()=>worker.postMessage('usd'), 30000 )
 worker.addEventListener("message", event => {
   let valor = event.data[idConversao].ask;
+  console.log(valor)
   cotacaoMoeda = valor
 
   valorConvertidoH2.innerHTML = ''
