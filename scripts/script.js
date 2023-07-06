@@ -1,11 +1,18 @@
 import { populaTabela } from "./tabelaProgressao.js";
 import { graficoDias } from "./grafico.js";
-import {possiveisMoedas, listaMoedas} from './moedas.js'
+import {listaMoedas} from './moedas.js'
 const currencyInput = document.getElementById('currency');
 const valorConvertidoH2 = document.getElementById('valorConvertido')
+const spanMoedaOrigem = document.getElementById('spanMoedaOrigem')
+const spanMoedaDestino = document.getElementById('spanMoedaDestino')
+let idMoedaOrigem = 'USD'
+let idMoedaDestino = 'BRL'
+let idConversao = idMoedaOrigem + idMoedaDestino
 const diasGrafico = 7
-let cotacaoDolar = 0;
+let cotacaoMoeda = 0;
 let moeda = ' BRL';
+
+
 
 currencyInput.addEventListener('input', formataMoeda);
 function formataMoeda(){
@@ -21,13 +28,13 @@ function formataMoeda(){
 }
 
 function converteValor(valor){
-    const valorConvertido = parseFloat(valor) * parseFloat(cotacaoDolar)
+    const valorConvertido = parseFloat(valor) * parseFloat(cotacaoMoeda)
 
     valorConvertidoH2.innerHTML = ''
     valorConvertidoH2.innerHTML = valorConvertido.toFixed(2) + moeda
 
     if(currencyInput.value == ''){
-        valorConvertidoH2.innerHTML = parseFloat(cotacaoDolar).toFixed(2) + moeda
+        valorConvertidoH2.innerHTML = parseFloat(cotacaoMoeda).toFixed(2) + moeda
     }
 
 }
@@ -36,8 +43,8 @@ let worker = new Worker('./scripts/workers/workerMoeda.js');
 worker.postMessage('usd');
 setInterval(()=>worker.postMessage('usd'), 30000 )
 worker.addEventListener("message", event => {
-  let valor = event.data.USDBRL.ask;
-  cotacaoDolar = valor
+  let valor = event.data[idConversao].ask;
+  cotacaoMoeda = valor
 
   valorConvertidoH2.innerHTML = ''
   if(currencyInput.value == ''){
@@ -47,15 +54,21 @@ worker.addEventListener("message", event => {
     valorConvertidoH2.innerHTML = parseFloat(cotacaoMultiplicada).toFixed(2) + moeda
   }
 
-  populaTabela(cotacaoDolar);
+  populaTabela(cotacaoMoeda);
   
   
 })
 
-graficoDias(diasGrafico);
+graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino);
 
 // window.addEventListener('load', possiveisMoedas());
 
 listaMoedas();
 
+export function recebeSelecaoDeMoedas(moedaOrigem, moedaDestino){
+  console.log(moedaOrigem)
+  console.log(moedaDestino)
+  // graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino);
+
+}
 

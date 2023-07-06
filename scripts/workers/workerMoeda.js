@@ -1,4 +1,6 @@
-const moedaIfem = 'USD-BRL';
+const moedaOrigem = 'USD'
+const moedaDestino = 'BRL'
+const moedaIfem = moedaOrigem + '-' + moedaDestino;
 
 async function conectaAPI (moeda){
     const moedaSemIfem = moeda.replace('-', '');

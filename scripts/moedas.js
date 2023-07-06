@@ -1,4 +1,6 @@
 
+import{recebeSelecaoDeMoedas} from './script.js'
+
 const ulMoedaOrigem = document.getElementById('listaMoedaOrigem')
 const ulMoedaDestino = document.getElementById('listaMoedaDestino')
 const btnMoedasOrigem = document.getElementById('btnMoedasOrigem')
@@ -134,11 +136,16 @@ function sugereMoeda(valores, ulMoeda, inputMoeda){
         liMoeda.addEventListener('click', () => {
             if(ulMoeda.id == ulMoedaOrigem.id){
                 spanMoedaOrigem.innerText = moeda.id.toUpperCase() + ', ' + moeda.descricao.toUpperCase()
+                divListaMoedasOrigem.classList.toggle('hidden')
+                recebeSelecaoDeMoedas(moeda.id, spanMoedaDestino.textContent)
             }
 
             if(ulMoeda.id == ulMoedaDestino.id){
                 spanMoedaDestino.innerText = moeda.id.toUpperCase() + ', ' + moeda.descricao.toUpperCase()
+                divListaMoedasDestino.classList.toggle('hidden')
+                recebeSelecaoDeMoedas(spanMoedaOrigem.textContent, moeda.id )
             }
+            
         })
 
         

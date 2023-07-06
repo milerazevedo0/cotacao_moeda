@@ -3,8 +3,8 @@ const tituloMoeda = []
 const btnDias = document.querySelectorAll('.btn-dias')
 let diasGrafico = 7
 
-export async function graficoDias(dias){
-    const conecta = await fetch(`https://economia.awesomeapi.com.br/json/daily/USD-BRL/${dias}`)
+export async function graficoDias(dias, moedaOrigem, moedaDestino){
+    const conecta = await fetch(`https://economia.awesomeapi.com.br/json/daily/${moedaOrigem}-${moedaDestino}/${dias}`)
     const conectaTraduzido = await conecta.json();
     tituloMoeda.splice(0, tituloMoeda.length);
     tituloMoeda.push(conectaTraduzido[0].name)
