@@ -1,9 +1,13 @@
 const elementoGrafico = document.getElementById('graficoMoeda');
 const tituloMoeda = []
+let idMoedaOrigem = 'EUR'
+let idMoedaDestino = 'BRL'
 const btnDias = document.querySelectorAll('.btn-dias')
 let diasGrafico = 7
 
 export async function graficoDias(dias, moedaOrigem, moedaDestino){
+    idMoedaOrigem = moedaOrigem
+    idMoedaDestino = moedaDestino
     const conecta = await fetch(`https://economia.awesomeapi.com.br/json/daily/${moedaOrigem}-${moedaDestino}/${dias}`)
     const conectaTraduzido = await conecta.json();
     tituloMoeda.splice(0, tituloMoeda.length);
@@ -83,7 +87,7 @@ function converteData(timestamp){
       }
       const dias = e.target.attributes[1].value
       diasGrafico = parseInt(dias)
-      graficoDias(diasGrafico, 'USD', 'BRL')
+      graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino)
       btn.classList.add('bg-verde-claro')
     })
   })

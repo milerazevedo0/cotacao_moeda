@@ -1,16 +1,17 @@
 import { populaTabela } from "./tabelaProgressao.js";
 import { graficoDias } from "./grafico.js";
 import {listaMoedas} from './moedas.js'
+// import { atualizaIdMoedaWorker } from './workerMoeda.js'
 const currencyInput = document.getElementById('currency');
 const valorConvertidoH2 = document.getElementById('valorConvertido')
 const spanMoedaOrigem = document.getElementById('spanMoedaOrigem')
 const spanMoedaDestino = document.getElementById('spanMoedaDestino')
-let idMoedaOrigem = 'USD'
+let idMoedaOrigem = 'EUR'
 let idMoedaDestino = 'BRL'
 let idConversao = idMoedaOrigem + idMoedaDestino
 const diasGrafico = 7
 let cotacaoMoeda = 0;
-let moeda = ' BRL';
+let moeda = ' ' + idMoedaDestino;
 
 
 
@@ -43,6 +44,7 @@ let worker = new Worker('./scripts/workers/workerMoeda.js');
 worker.postMessage('usd');
 setInterval(()=>worker.postMessage('usd'), 30000 )
 worker.addEventListener("message", event => {
+  console.log(idConversao)
   let valor = event.data[idConversao].ask;
   console.log(valor)
   cotacaoMoeda = valor
@@ -66,9 +68,15 @@ graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino);
 
 listaMoedas();
 
-export function recebeSelecaoDeMoedas(moedaOrigem, moedaDestino){
-  console.log(moedaOrigem)
-  console.log(moedaDestino)
+export function recebeSelecaoDeMoedaOrigem(moedaOrigem){
+  idMoedaOrigem = moedaOrigem
+  graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino);
+  // atualizaIdMoedaWorker(idMoedaOrigem, idMoedaDestino)
+
+}
+
+export function recebeSelecaoDeMoedaDestino(moedaDestino){
+  // console.log(moedaDestino)
   // graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino);
 
 }
