@@ -1,19 +1,15 @@
 import { populaTabela } from "./tabelaProgressao.js";
 import { graficoDias } from "./grafico.js";
 import {listaMoedas} from './moedas.js'
-// import { atualizaIdMoedaWorker } from './workerMoeda.js'
 const currencyInput = document.getElementById('currency');
 const valorConvertidoH2 = document.getElementById('valorConvertido')
-const spanMoedaOrigem = document.getElementById('spanMoedaOrigem')
-const spanMoedaDestino = document.getElementById('spanMoedaDestino')
-let idMoedaOrigem = 'EUR'
+let idMoedaOrigem = 'USD'
 let idMoedaDestino = 'BRL'
+let moedas = [idMoedaOrigem, idMoedaDestino]
 let idConversao = idMoedaOrigem + idMoedaDestino
 const diasGrafico = 7
 let cotacaoMoeda = 0;
 let moeda = ' ' + idMoedaDestino;
-
-
 
 currencyInput.addEventListener('input', formataMoeda);
 function formataMoeda(){
@@ -41,12 +37,29 @@ function converteValor(valor){
 }
 
 let worker = new Worker('./scripts/workers/workerMoeda.js');
-worker.postMessage('usd');
-setInterval(()=>worker.postMessage('usd'), 30000 )
+worker.postMessage(moedas);
+setInterval(()=>worker.postMessage(moedas), 30000 )
 worker.addEventListener("message", event => {
-  console.log(idConversao)
+  
+  console.log(event)
+  console.log('Script idConversao: ' + idConversao)
+
+  try {
+    let valor = event.data[idConversao].ask;
+    cotacaoMoeda = valor
+  } catch (error) {
+    if(event.data.status == 404){
+      alert('Combinação indisponível no momento. Selecione outra combinação.')
+    }
+    if(error instanceof TypeError){
+      alert('Infelizmente a combinação não foi localizada nesse momento. Por favor, selecione outra combinação.')
+    }else{
+      alert("Infelizmente um erro ocorreu, contate o adm!")
+      console.log(error.message)
+    }
+  }
+
   let valor = event.data[idConversao].ask;
-  console.log(valor)
   cotacaoMoeda = valor
 
   valorConvertidoH2.innerHTML = ''
@@ -59,7 +72,6 @@ worker.addEventListener("message", event => {
 
   populaTabela(cotacaoMoeda);
   
-  
 })
 
 graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino);
@@ -70,14 +82,20 @@ listaMoedas();
 
 export function recebeSelecaoDeMoedaOrigem(moedaOrigem){
   idMoedaOrigem = moedaOrigem
+  moedas = [idMoedaOrigem, idMoedaDestino]
+  idConversao = idMoedaOrigem + idMoedaDestino
   graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino);
-  // atualizaIdMoedaWorker(idMoedaOrigem, idMoedaDestino)
+  worker.postMessage(moedas);
 
 }
 
 export function recebeSelecaoDeMoedaDestino(moedaDestino){
-  // console.log(moedaDestino)
-  // graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino);
+  idMoedaDestino = moedaDestino
+  moedas = [idMoedaOrigem, idMoedaDestino]
+  idConversao = idMoedaOrigem + idMoedaDestino
+  graficoDias(diasGrafico, idMoedaOrigem, idMoedaDestino);
+  moeda = ' ' + idMoedaDestino;
+  worker.postMessage(moedas);
 
 }
 

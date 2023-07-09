@@ -87,8 +87,6 @@ export function listaMoedas(){
     })  
 }
 
-
-
 inputMoedaOrigem.addEventListener('input', ()=>{
     const moedaPesquisaOrigem = inputMoedaOrigem.value.toLowerCase()
     sugereMoeda(tiposDeMoedasCache, ulMoedaOrigem, moedaPesquisaOrigem)
@@ -138,12 +136,13 @@ function sugereMoeda(valores, ulMoeda, inputMoeda){
                 spanMoedaOrigem.innerText = moeda.id.toUpperCase() + ', ' + moeda.descricao.toUpperCase()
                 divListaMoedasOrigem.classList.toggle('hidden')
                 recebeSelecaoDeMoedaOrigem(moeda.id.toUpperCase())
+                
             }
 
             if(ulMoeda.id == ulMoedaDestino.id){
                 spanMoedaDestino.innerText = moeda.id.toUpperCase() + ', ' + moeda.descricao.toUpperCase()
                 divListaMoedasDestino.classList.toggle('hidden')
-                recebeSelecaoDeMoedas(moeda.id.toUpperCase() )
+                recebeSelecaoDeMoedaDestino(moeda.id.toUpperCase() )
             }
             
         })

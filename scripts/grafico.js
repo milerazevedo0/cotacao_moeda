@@ -21,7 +21,6 @@ export async function graficoDias(dias, moedaOrigem, moedaDestino){
       }
     } tituloMoeda.push(conectaTraduzido[0].name)
 
-    // tituloMoeda.push(conectaTraduzido[0].name)
     trataValoresParaGrafico(conectaTraduzido)
 }
 

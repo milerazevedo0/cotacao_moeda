@@ -1,8 +1,6 @@
-const idMoedaOrigem = 'EUR'
-const idMoedaDestino = 'BRL'
-const moedaIfem = idMoedaOrigem + '-' + idMoedaDestino;
-
-
+let idMoedaOrigem = 'EUR'
+let idMoedaDestino = 'BRL'
+let moedaIfem = idMoedaOrigem + '-' + idMoedaDestino;
 
 async function conectaAPI (moeda){
     // const moedaSemIfem = moeda.replace('-', '');
@@ -12,15 +10,12 @@ async function conectaAPI (moeda){
     // console.log(conectaTraduzido)
 };
 
-
 addEventListener("message", event =>{
+
+    idMoedaOrigem = event.data[0]
+    idMoedaDestino = event.data[1]
+    moedaIfem = idMoedaOrigem + '-' + idMoedaDestino
     conectaAPI(moedaIfem);
     // setInterval(()=> conectaAPI(moedaIfem), 5000);
 });
-
-
- function atualizaIdMoedaWorker(moedaOrigem, moedaDestino){
-    idMoedaOrigem = moedaOrigem
-    idMoedaDestino = moedaDestino
-}
 
